@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card as CardComponent } from './Card';
 import { Card as CardType } from '../../types';
-import { CARD_DIMENSIONS, DEAL_STAGGER_MS } from '../../utils/constants';
+import { cardDimensions, animation } from '../../theme';
 
 interface CardStackProps {
   cards: CardType[];
@@ -42,21 +42,18 @@ export function CardStack({
       {cards.map((card, index) => {
         // Determine if this specific card is face up
         const isCardFaceUp = Array.isArray(faceUp) ? faceUp[index] : faceUp;
-        
+
         // Calculate position offset for stacking
         const targetX = basePosition.x + index * cardOffset.x;
         const targetY = basePosition.y + index * cardOffset.y;
-        
-        // Calculate delay for staggered dealing
-        const delay = staggerDeals ? index * DEAL_STAGGER_MS : 0;
+
+        // Calculate delay for staggered dealing (150ms between cards)
+        const delay = staggerDeals ? index * animation.stagger.card : 0;
 
         return (
           <View
             key={`${card.rank}-${card.suit}-${index}`}
-            style={[
-              styles.cardPosition,
-              { zIndex: index },
-            ]}
+            style={[styles.cardPosition, { zIndex: index }]}
           >
             <CardComponent
               card={card}
@@ -76,8 +73,8 @@ export function CardStack({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    width: CARD_DIMENSIONS.width,
-    height: CARD_DIMENSIONS.height,
+    width: cardDimensions.width,
+    height: cardDimensions.height,
   },
   cardPosition: {
     position: 'absolute',

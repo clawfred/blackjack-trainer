@@ -6,6 +6,10 @@ export function useHaptics() {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   }, []);
 
+  const flipCard = useCallback(async () => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  }, []);
+
   const actionButton = useCallback(async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   }, []);
@@ -36,6 +40,7 @@ export function useHaptics() {
 
   return {
     dealCard,
+    flipCard,
     actionButton,
     win,
     lose,

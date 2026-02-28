@@ -8,8 +8,9 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { Card, CardStack } from '../src/components/Card';
+import { Button } from '../src/components/ui';
 import { createCard, SUITS, RANKS, Card as CardType } from '../src/types';
-import { COLORS, CARD_DIMENSIONS } from '../src/utils/constants';
+import { colors, typography, spacing, cardDimensions } from '../src/theme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -128,21 +129,29 @@ export default function DemoScreen() {
 
       {/* Action buttons */}
       <View style={styles.buttonRow}>
-        <Pressable style={[styles.button, styles.dealButton]} onPress={dealHand}>
-          <Text style={styles.buttonText}>Deal Hand</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.hitButton]} onPress={hitPlayer}>
-          <Text style={styles.buttonText}>Hit</Text>
-        </Pressable>
+        <Button
+          title="Deal Hand"
+          variant="primary"
+          onPress={dealHand}
+        />
+        <Button
+          title="Hit"
+          variant="success"
+          onPress={hitPlayer}
+        />
       </View>
 
       <View style={styles.buttonRow}>
-        <Pressable style={[styles.button, styles.singleButton]} onPress={dealSingle}>
-          <Text style={styles.buttonText}>Deal Single</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.resetButton]} onPress={reset}>
-          <Text style={styles.buttonText}>Reset</Text>
-        </Pressable>
+        <Button
+          title="Deal Single"
+          variant="secondary"
+          onPress={dealSingle}
+        />
+        <Button
+          title="Reset"
+          variant="danger"
+          onPress={reset}
+        />
       </View>
 
       {/* Info text */}
@@ -158,22 +167,22 @@ export default function DemoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background.primary,
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    backgroundColor: colors.background.primary,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.lg,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: COLORS.text.primary,
+    fontSize: typography.fontSize['3xl'],
+    fontWeight: typography.fontWeight.bold,
+    color: colors.text.primary,
     textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
-    color: COLORS.text.secondary,
+    fontSize: typography.fontSize.lg,
+    color: colors.text.secondary,
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   gameArea: {
     flex: 1,
@@ -182,59 +191,35 @@ const styles = StyleSheet.create({
   },
   handArea: {
     alignItems: 'center',
-    minHeight: CARD_DIMENSIONS.height + 40,
+    minHeight: cardDimensions.height + 40,
   },
   singleCardArea: {
     alignItems: 'center',
-    minHeight: CARD_DIMENSIONS.height + 40,
+    minHeight: cardDimensions.height + 40,
   },
   label: {
-    fontSize: 14,
-    color: COLORS.text.muted,
-    marginBottom: 8,
+    fontSize: typography.fontSize.sm,
+    color: colors.text.muted,
+    marginBottom: spacing.sm,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   cardsContainer: {
-    minWidth: CARD_DIMENSIONS.width * 3,
-    minHeight: CARD_DIMENSIONS.height,
+    minWidth: cardDimensions.width * 3,
+    minHeight: cardDimensions.height,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 12,
-    marginBottom: 12,
-  },
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    minWidth: 140,
-    alignItems: 'center',
-  },
-  dealButton: {
-    backgroundColor: COLORS.actions.double,
-  },
-  hitButton: {
-    backgroundColor: COLORS.actions.hit,
-  },
-  singleButton: {
-    backgroundColor: COLORS.accents.primary,
-  },
-  resetButton: {
-    backgroundColor: COLORS.feedback.error,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    gap: spacing.md,
+    marginBottom: spacing.md,
   },
   info: {
-    fontSize: 14,
-    color: COLORS.text.secondary,
+    fontSize: typography.fontSize.base,
+    color: colors.text.secondary,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: spacing.lg,
   },
 });

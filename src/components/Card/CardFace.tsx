@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card as CardType, isRedSuit } from '../../types';
-import { COLORS, CARD_DIMENSIONS } from '../../utils/constants';
+import { colors, cardDimensions, typography } from '../../theme';
 
 interface CardFaceProps {
   card: CardType;
@@ -17,7 +17,7 @@ const SUIT_SYMBOLS: Record<string, string> = {
 
 export function CardFace({ card }: CardFaceProps) {
   const isRed = isRedSuit(card.suit);
-  const suitColor = isRed ? COLORS.card.hearts : COLORS.card.spades;
+  const suitColor = isRed ? colors.suit.red : colors.suit.black;
   const suitSymbol = SUIT_SYMBOLS[card.suit];
 
   return (
@@ -44,12 +44,12 @@ export function CardFace({ card }: CardFaceProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: CARD_DIMENSIONS.width,
-    height: CARD_DIMENSIONS.height,
-    backgroundColor: COLORS.card.face,
-    borderRadius: CARD_DIMENSIONS.borderRadius,
-    borderWidth: CARD_DIMENSIONS.borderWidth,
-    borderColor: CARD_DIMENSIONS.borderColor,
+    width: cardDimensions.width,
+    height: cardDimensions.height,
+    backgroundColor: colors.card.face,
+    borderRadius: cardDimensions.borderRadius,
+    borderWidth: cardDimensions.borderWidth,
+    borderColor: colors.card.border,
     padding: 4,
     position: 'relative',
   },
@@ -60,19 +60,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomCorner: {
-    top: 'auto',
-    left: 'auto',
+    top: undefined,
+    left: undefined,
     bottom: 4,
     right: 4,
     transform: [{ rotate: '180deg' }],
   },
   rank: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: typography.fontSize.base,
+    fontWeight: typography.fontWeight.bold,
     lineHeight: 16,
   },
   suit: {
-    fontSize: 12,
+    fontSize: typography.fontSize.sm,
     lineHeight: 14,
   },
   center: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   centerSuit: {
-    fontSize: 32,
+    fontSize: typography.fontSize['3xl'],
     lineHeight: 36,
   },
 });

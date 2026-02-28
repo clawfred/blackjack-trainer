@@ -1,67 +1,102 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { COLORS, CARD_DIMENSIONS } from '../../utils/constants';
+import Svg, { Defs, Pattern, Rect, Polygon } from 'react-native-svg';
+import { cardDimensions, colors } from '../../theme';
 
 export function CardBack() {
+  const width = cardDimensions.width;
+  const height = cardDimensions.height;
+  const patternSize = 12;
+
   return (
     <View style={styles.container}>
-      {/* Inner border for visual detail */}
-      <View style={styles.innerBorder}>
-        {/* Diamond pattern */}
-        <View style={styles.pattern}>
-          <View style={styles.diamond} />
-          <View style={[styles.diamond, styles.diamond2]} />
-          <View style={[styles.diamond, styles.diamond3]} />
-          <View style={[styles.diamond, styles.diamond4]} />
-        </View>
-      </View>
+      <Svg width={width} height={height} style={styles.svg}>
+        <Defs>
+          {/* Diamond pattern definition */}
+          <Pattern
+            id="diamondPattern"
+            patternUnits="userSpaceOnUse"
+            width={patternSize}
+            height={patternSize}
+          >
+            {/* Background for pattern tile */}
+            <Rect
+              width={patternSize}
+              height={patternSize}
+              fill={colors.card.back}
+            />
+            {/* Diamond shape - rotated square */}
+            <Polygon
+              points={`${patternSize / 2},1 ${patternSize - 1},${patternSize / 2} ${patternSize / 2},${patternSize - 1} 1,${patternSize / 2}`}
+              fill="rgba(255,255,255,0.08)"
+            />
+          </Pattern>
+        </Defs>
+
+        {/* Main background with rounded corners */}
+        <Rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          rx={cardDimensions.borderRadius}
+          ry={cardDimensions.borderRadius}
+          fill={colors.card.back}
+        />
+
+        {/* Diamond pattern fill - clipped to inner area */}
+        <Rect
+          x={4}
+          y={4}
+          width={width - 8}
+          height={height - 8}
+          rx={cardDimensions.borderRadius - 2}
+          ry={cardDimensions.borderRadius - 2}
+          fill="url(#diamondPattern)"
+        />
+
+        {/* Inner border for elegance */}
+        <Rect
+          x={4}
+          y={4}
+          width={width - 8}
+          height={height - 8}
+          rx={cardDimensions.borderRadius - 2}
+          ry={cardDimensions.borderRadius - 2}
+          fill="none"
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth={1.5}
+        />
+
+        {/* Outer border */}
+        <Rect
+          x={0.5}
+          y={0.5}
+          width={width - 1}
+          height={height - 1}
+          rx={cardDimensions.borderRadius}
+          ry={cardDimensions.borderRadius}
+          fill="none"
+          stroke="rgba(255,255,255,0.05)"
+          strokeWidth={1}
+        />
+      </Svg>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: CARD_DIMENSIONS.width,
-    height: CARD_DIMENSIONS.height,
-    backgroundColor: COLORS.card.back,
-    borderRadius: CARD_DIMENSIONS.borderRadius,
-    borderWidth: CARD_DIMENSIONS.borderWidth,
-    borderColor: CARD_DIMENSIONS.borderColor,
-    padding: 4,
-  },
-  innerBorder: {
-    flex: 1,
-    borderRadius: CARD_DIMENSIONS.borderRadius - 2,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.15)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: cardDimensions.width,
+    height: cardDimensions.height,
+    borderRadius: cardDimensions.borderRadius,
     overflow: 'hidden',
   },
-  pattern: {
-    width: 30,
-    height: 30,
-    position: 'relative',
-  },
-  diamond: {
+  svg: {
     position: 'absolute',
-    width: 8,
-    height: 8,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    transform: [{ rotate: '45deg' }],
-    top: 11,
-    left: 11,
-  },
-  diamond2: {
-    top: 4,
-    left: 4,
-  },
-  diamond3: {
-    top: 4,
-    left: 18,
-  },
-  diamond4: {
-    top: 18,
-    left: 4,
+    top: 0,
+    left: 0,
   },
 });
+
+export default CardBack;

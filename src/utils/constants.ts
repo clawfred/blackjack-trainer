@@ -1,75 +1,58 @@
-// Color constants from PRD Section 8.4
+/**
+ * Constants - Re-exports from theme for backwards compatibility
+ *
+ * New code should import directly from '../../theme' instead.
+ * This file exists for compatibility with existing imports.
+ */
+
+import {
+  colors,
+  cardDimensions,
+  animation,
+  shadows,
+} from '../theme';
+
+// Legacy color structure mapping
 export const COLORS = {
-  background: {
-    primary: '#0D0D0F',     // near black
-    secondary: '#1A1A1D',   // cards, containers
-    elevated: '#252528',    // modals, sheets
-  },
+  background: colors.background,
   text: {
-    primary: '#FFFFFF',     // headings
-    secondary: '#A0A0A5',   // body
-    muted: '#606065',       // hints
+    primary: colors.text.primary,
+    secondary: colors.text.secondary,
+    muted: colors.text.muted,
   },
   card: {
-    face: '#FAFAF8',        // cream white
-    back: '#1E3A5F',        // deep navy
-    hearts: '#E63946',      // red
-    diamonds: '#E63946',    // red
-    clubs: '#1D1D1F',       // black
-    spades: '#1D1D1F',      // black
+    face: colors.card.face,
+    back: colors.card.back,
+    hearts: colors.suit.red,
+    diamonds: colors.suit.red,
+    clubs: colors.suit.black,
+    spades: colors.suit.black,
   },
-  actions: {
-    hit: '#4ADE80',         // green
-    stand: '#FACC15',       // yellow
-    double: '#60A5FA',      // blue
-    split: '#F472B6',       // pink
-    surrender: '#A78BFA',   // purple
-  },
-  feedback: {
-    success: '#22C55E',     // green
-    warning: '#EAB308',     // yellow
-    error: '#EF4444',       // red
-    info: '#3B82F6',        // blue
-  },
+  actions: colors.actions,
+  feedback: colors.feedback,
   accents: {
-    primary: '#6366F1',     // indigo
-    gold: '#F59E0B',        // achievements
+    primary: colors.accent.primary,
+    gold: '#F59E0B',
   },
 } as const;
 
-// Card dimensions from PRD Section 8.6
+// Re-export card dimensions with legacy border color
 export const CARD_DIMENSIONS = {
-  width: 70,
-  height: 100,
-  borderRadius: 8,
-  borderWidth: 1,
-  borderColor: 'rgba(0,0,0,0.0625)', // #00000010
+  ...cardDimensions,
+  borderColor: colors.card.border,
 } as const;
 
-// Animation specs from PRD Section 9.2
+// Re-export animation configs
 export const ANIMATION = {
-  deal: {
-    damping: 20,
-    stiffness: 300,
-    mass: 0.8,
-  },
+  deal: animation.spring.deal,
   flip: {
-    duration: 300,
+    duration: animation.flip.duration,
   },
-  hit: {
-    damping: 18,
-    stiffness: 280,
-  },
+  hit: animation.spring.hit,
 } as const;
 
-// Timing for staggered card deals
-export const DEAL_STAGGER_MS = 150;
+// Stagger timing
+export const DEAL_STAGGER_MS = animation.stagger.card;
 
-// Shadow for active cards
-export const CARD_SHADOW = {
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.4,
-  shadowRadius: 12,
-  elevation: 8,
-} as const;
+// Card shadow
+export const CARD_SHADOW = shadows.card;
