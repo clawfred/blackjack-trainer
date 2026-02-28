@@ -1,6 +1,9 @@
 import * as Haptics from 'expo-haptics';
 import { useCallback } from 'react';
 
+type ImpactStyle = 'light' | 'medium' | 'heavy';
+type NotificationType = 'success' | 'warning' | 'error';
+
 export function useHaptics() {
   const dealCard = useCallback(async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -37,6 +40,26 @@ export function useHaptics() {
   const heavyPress = useCallback(async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   }, []);
+  
+  // Generic impact with style parameter
+  const impact = useCallback(async (style: ImpactStyle = 'medium') => {
+    const styleMap = {
+      light: Haptics.ImpactFeedbackStyle.Light,
+      medium: Haptics.ImpactFeedbackStyle.Medium,
+      heavy: Haptics.ImpactFeedbackStyle.Heavy,
+    };
+    await Haptics.impactAsync(styleMap[style]);
+  }, []);
+  
+  // Generic notification
+  const notification = useCallback(async (type: NotificationType) => {
+    const typeMap = {
+      success: Haptics.NotificationFeedbackType.Success,
+      warning: Haptics.NotificationFeedbackType.Warning,
+      error: Haptics.NotificationFeedbackType.Error,
+    };
+    await Haptics.notificationAsync(typeMap[type]);
+  }, []);
 
   return {
     dealCard,
@@ -48,5 +71,7 @@ export function useHaptics() {
     mistake,
     correctDecision,
     heavyPress,
+    impact,
+    notification,
   };
 }
