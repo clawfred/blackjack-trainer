@@ -7,6 +7,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
+import { router } from 'expo-router';
 import { Card, CardStack } from '../src/components/Card';
 import { Button } from '../src/components/ui';
 import { createCard, SUITS, RANKS, Card as CardType } from '../src/types';
@@ -154,11 +155,22 @@ export default function DemoScreen() {
         />
       </View>
 
+      {/* Play Game Button */}
+      <View style={styles.buttonRow}>
+        <Button
+          title="🎰 Play Blackjack"
+          variant="primary"
+          size="lg"
+          onPress={() => router.push('/game')}
+          style={styles.playButton}
+        />
+      </View>
+
       {/* Info text */}
       <Text style={styles.info}>
         {playerCards.length > 0 || dealerCards.length > 0
           ? `Player: ${playerCards.length} cards | Dealer: ${dealerCards.length} cards`
-          : 'Press "Deal Hand" to start'}
+          : 'Press "Play Blackjack" to start a game'}
       </Text>
     </SafeAreaView>
   );
@@ -221,5 +233,8 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
     marginBottom: spacing.lg,
+  },
+  playButton: {
+    minWidth: 200,
   },
 });
